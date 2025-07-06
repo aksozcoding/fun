@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Havan Topu Animasyonu</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background: linear-gradient(to bottom, #87ceeb, #ffffff);
+      font-family: sans-serif;
+    }
+
+    .zemin {
+      position: absolute;
+      bottom: 0;
+      height: 180px;
+      width: 100%;
+      background: repeating-linear-gradient(45deg,
+          #228B22,
+          #228B22 10px,
+          #2E8B57 10px,
+          #2E8B57 20px);
+      z-index: 0;
+    }
+
+    .havan {
+      position: absolute;
+      bottom: 180px;
+      left: 30px;
+      width: 200px;
+      z-index: 1;
+    }
+
+    .hedef {
+      position: absolute;
+      bottom: 180px;
+      right: 30px;
+      width: 160px;
+      z-index: 1;
+      transition: opacity 0.5s ease;
+    }
+
+    .top {
+      position: absolute;
+      bottom: 220px;
+      left: 130px;
+      width: 25px;
+      height: 25px;
+      background: radial-gradient(circle, #555, #000);
+      border-radius: 50%;
+      display: none;
+      z-index: 2;
+    }
+
+    .patlama {
+      position: absolute;
+      bottom: 160px;
+      right: 20px;
+      width: 180px;
+      height: 180px;
+      background: url('https://media.giphy.com/media/TlK63E1NvErYw/giphy.gif') no-repeat center/cover;
+      display: none;
+      z-index: 3;
+    }
+
+    .buton {
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 12px 24px;
+      font-size: 18px;
+      background: #ff4444;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      z-index: 10;
+      box-shadow: 0 0 12px #ff8888;
+    }
+
+    .buton:hover {
+      background: #cc0000;
+    }
+  </style>
+</head>
+
+<body>
+
+  <button class="buton" onclick="yokEt()">💣 YOK ET</button>
+
+  <!-- Havan topu görseli (Base64 kodunu buraya tam yapıştır) -->
+  <img
+    src="data:image/jpeg;base64,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"
+    alt="Havan Topu" class="havan" id="havanTopu" />
+
+  <div class="top" id="top"></div>
+  <img
+    src="https://scontent.fdiy5-1.fna.fbcdn.net/v/t39.30808-6/448879764_3286997264943221_5077504190349105383_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=qxF1P4v8sRAQ7kNvwE4_zpA&_nc_oc=Adll-B4VIvAHsySUVUqKaP2PKObqANurroGqawJrum_oRDIICxOWPaKAIdziJolDHIccymL46EZqN-KyGh9jSoqh&_nc_zt=23&_nc_ht=scontent.fdiy5-1.fna&_nc_gid=Me0OEcM5GOBiJnTcwQ2OnQ&oh=00_AfT5_ZhGYpgFz30c-H2VNioPUuIf4snBm52rwjUwVKes_A&oe=68701ED9"
+    alt="Hedef Resmi" class="hedef" id="hedef" />
+  <div class="patlama" id="patlama"></div>
+  <div class="zemin"></div>
+
+  <script>
+    function yokEt() {
+      const top = document.getElementById('top');
+      const hedef = document.getElementById('hedef');
+      const patlama = document.getElementById('patlama');
+
+      // Hedef görünür olsun ve opak
+      hedef.style.opacity = 1;
+
+      // Topu görünür yap ve başlangıç konumuna ayarla
+      top.style.display = 'block';
+      top.style.left = '130px';
+
+      // Küçük gecikmeyle animasyonu başlat (uçuş)
+      setTimeout(() => {
+        top.style.transition = 'left 5s linear';
+        top.style.left = 'calc(100% - 150px)';
+      }, 50);
+
+      // 5 saniye sonra patlama göster, topu gizle, hedefi yok et
+      setTimeout(() => {
+        top.style.display = 'none';
+        hedef.style.opacity = 0;
+        patlama.style.display = 'block';
+
+        // Patlama animasyonunu 1.5 saniye göster
+        setTimeout(() => {
+          patlama.style.display = 'none';
+        }, 1500);
+      }, 5050);
+    }
+  </script>
+
+</body>
+
+</html>
